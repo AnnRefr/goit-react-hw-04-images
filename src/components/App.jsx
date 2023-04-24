@@ -15,7 +15,6 @@ export const App = () => {
   const [loadMore, setLoadMore] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [largeImageURL, setLargeImageURL] = useState('largeImageURLmayBe');
-  const per_page = 12;
 
   useEffect(() => {
     getImages(searchQuery, page);
@@ -28,8 +27,6 @@ export const App = () => {
 
     try {
       const { hits, totalHits } = await fetchImages(searchQuery, page);
-      setIsLoading(true);
-      setIsLoading(true);
       if (totalHits === 0) {
         alert('Sorry, we do not find images');
       }
@@ -46,7 +43,7 @@ export const App = () => {
       );
       console.log(hits, totalHits);
       setImages(prevImages => [...prevImages, ...normalizedImages]);
-      setLoadMore(page < Math.ceil(totalHits / per_page));
+      setLoadMore(page < Math.ceil(totalHits / 12));
     } catch (error) {
     } finally {
       setIsLoading(false);
@@ -65,7 +62,7 @@ export const App = () => {
     setPage(prevPage => prevPage + 1);
   };
 
-  const onOpenModal = (largeImageURL, tags) => {
+  const onOpenModal = largeImageURL => {
     console.log(largeImageURL);
     setShowModal(true);
     setLargeImageURL(largeImageURL);
